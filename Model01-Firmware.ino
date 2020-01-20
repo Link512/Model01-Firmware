@@ -16,7 +16,6 @@
 #include "Kaleidoscope-LEDEffect-SolidColor.h"
 #include "Kaleidoscope-LEDEffect-Chase.h"
 #include "Kaleidoscope-LED-Stalker.h"
-#include "Kaleidoscope-Model01-TestMode.h"
 #include "Kaleidoscope-HostPowerManagement.h"
 #include "Kaleidoscope-MagicCombo.h"
 #include "Kaleidoscope-USB-Quirks.h"
@@ -82,13 +81,10 @@ void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event 
   switch (event)
   {
   case kaleidoscope::plugin::HostPowerManagement::Suspend:
-    LEDControl.set_all_leds_to({0, 0, 0});
-    LEDControl.syncLeds();
-    LEDControl.paused = true;
+    LEDControl.disable();
     break;
   case kaleidoscope::plugin::HostPowerManagement::Resume:
-    LEDControl.paused = false;
-    LEDControl.refreshAll();
+    LEDControl.enable();
     break;
   case kaleidoscope::plugin::HostPowerManagement::Sleep:
     break;
@@ -135,7 +131,6 @@ KALEIDOSCOPE_INIT_PLUGINS(
     FocusSettingsCommand,
     FocusEEPROMCommand,
     BootGreetingEffect,
-    TestMode,
     LEDControl,
     LEDOff,
     Macros,
